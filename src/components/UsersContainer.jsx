@@ -1,6 +1,6 @@
 import User from "./User";
 
-const UsersContainer = ({ data }) => {
+const UsersContainer = ({ data, setData }) => {
   return (
     <>
       <div className="logo"></div>
@@ -21,7 +21,7 @@ const UsersContainer = ({ data }) => {
               <td colSpan="5">Sin datos</td>
             </tr>
           ) : (
-            data.map((user) => <User key={user.id} user={user} />)
+            data.map(user => <User key={user.id} user={user} />)
           )}
         </tbody>
       </table>
