@@ -7,14 +7,37 @@ const initialForm = {
 };
 
 //This form will be used to add users and update users
-const UsersForm = () => {
+const UsersForm = ({createUser, updateUser, userToEdit, setUserToEdit}) => {
   const [form, setForm] = useState(initialForm);
 
-  const handleChange = (e) => {};
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]:e.target.value
+    });
+  };
 
-  const handleSubmit = (e) => {};
-  
-  const handleReset = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if(!form.name || !form.email){
+      alert("Datos incompletos");
+      return;
+    }
+
+    if(id === null){
+      createUser(form);
+    }else{
+      updateUser(form);
+    }
+
+    handleReset();
+  };
+
+  const handleReset = (e) => {
+    setForm(initialForm);
+    setUserToEdit(null);
+  };
 
   return (
     <div>
