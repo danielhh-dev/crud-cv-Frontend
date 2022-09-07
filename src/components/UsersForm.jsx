@@ -1,33 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const initialForm = {
+  id: null,
   name: "",
   email: "",
   username: "",
 };
 
 //This form will be used to add users and update users
-const UsersForm = ({createUser, updateUser, userToEdit, setUserToEdit}) => {
+const UsersForm = ({ createUser, updateUser, userToEdit, setUserToEdit }) => {
   const [form, setForm] = useState(initialForm);
+
+  useEffect(() => {
+    if (userToEdit) {
+      setForm(userToEdit);
+    } else {
+      setForm(initialForm);
+    }
+  }, [userToEdit]);
 
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]:e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(!form.name || !form.email){
+    if (!form.name || !form.email) {
       alert("Datos incompletos");
       return;
     }
 
-    if(id === null){
+    if (form.id === null) {
       createUser(form);
-    }else{
+    } else {
       updateUser(form);
     }
 
@@ -41,8 +50,14 @@ const UsersForm = ({createUser, updateUser, userToEdit, setUserToEdit}) => {
 
   return (
     <div>
-      <h3>Add new user</h3>
-      <p>Add new user and assign role</p>
+      {userToEdit ? (
+        <h3>Update user </h3>
+      ) : (
+        <>
+          <h3>Add new user </h3> <p>Add new user and assign role</p>
+        </>
+      )}
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"

@@ -27,11 +27,29 @@ const App = () => {
   const [DB, setDB] = useState(initialDB);
   const [userToEdit, setUserToEdit] = useState(null);
 
-  const createUser = (data) => {};
+  const createUser = (user) => {
+    user.id = Date.now();
+    console.log(user);
+    setDB([...DB, user])
+  };
 
-  const updateUser = (data) => {};
+  const updateUser = (data) => {
+    let newData = DB.map(user => user.id === data.id ? data : user);
+    setDB(newData);
+  };
 
-  const deleteUser = (id) => {};
+  const deleteUser = (id) => {
+    let isDelete = window.confirm(
+      `Are you sure you want to delete this user?`
+    );
+
+    if(isDelete){
+      let newData = DB.filter(user => user.id !== id);
+      setDB(newData);
+    }else {
+      return;
+    }
+  };
 
   return (
     <div className="CRUD-">
